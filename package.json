@@ -14,10 +14,14 @@
     "@react-navigation/bottom-tabs": "^7.15.9",
     "@react-navigation/elements": "^2.9.14",
     "@react-navigation/native": "^7.2.2",
+    "@types/react-native-vector-icons": "^6.4.18",
     "react": "19.2.3",
     "react-native": "0.84.1",
     "react-native-safe-area-context": "^5.7.0",
-    "react-native-screens": "^4.24.0"
+    "react-native-screens": "^4.24.0",
+    "react-native-svg": "^15.15.4",
+    "react-native-svg-transformer": "^1.5.3",
+    "react-native-vector-icons": "^10.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -41,5 +45,10 @@
   },
   "engines": {
     "node": ">= 22.11.0"
+  },
+  "react-native": {
+    "assets": [
+      "src/assets/fonts/"
+    ]
   }
 }
