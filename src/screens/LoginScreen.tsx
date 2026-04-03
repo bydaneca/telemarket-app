@@ -14,13 +14,17 @@ import {
 import Logo from '../assets/logo.svg';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const LoginScreen = () => {
+type Props = {
+    onLoginSuccess: () => void;
+};
+
+const LoginScreen = ({ onLoginSuccess }: Props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = () => {
-        console.log('Login pressed');
+        onLoginSuccess();
     };
     
     return(
