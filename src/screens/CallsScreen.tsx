@@ -47,7 +47,11 @@ const CallsScreen = () => {
                 data={calls}
                 keyExtractor={item => item.id.toString()}
                 renderItem={({ item }) => 
-                    <CallCard call={item} />
+                    <CallCard 
+                        call={item}
+                        onPress={(call) => console.log('tapped', call.id)}
+                        onEdit={(call) => console.log('edit', call.id)}
+                        onDelete={(call) => console.log('delete', call.id)} />
                 }
                 contentContainerStyle={{ paddingVertical: 8 }}
                 ListEmptyComponent={

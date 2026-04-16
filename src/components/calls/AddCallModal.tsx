@@ -22,6 +22,17 @@ const OUTCOMES: CallOutcome[] = [
     'Closed',
 ];
 
+const NEXT_ACTIONS = [
+    'Send Proposal',
+    'Call Back',
+    'Email',
+    'Visit',
+    'Schedule Demo',
+    'Demo',
+    'N/A',
+    'Others',
+];
+
 const OUTCOME_COLORS: Record<CallOutcome, string> = {
     'Interested': '#F5A623',
     'Not Interested': '#D0021B',
@@ -44,7 +55,7 @@ export default function AddCallModal({ visible, onClose, onCallAdded }: Props) {
     const [contactName, setContactName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
     const [notes, setNotes] = useState('');
-    const [actions, setActions] = useState('');
+    const [actions, setActions] = useState<string[]>([]);
     const [actionDate, setActionDate] = useState('');
     const [loading, setLoading] = useState(false);
     const [fetchingRestaurants, setFetchingRestaurants] = useState(true);
@@ -74,7 +85,7 @@ export default function AddCallModal({ visible, onClose, onCallAdded }: Props) {
                 contactNumber,
                 outcome: selectedOutcome,
                 notes,
-                actions,
+                actions: actions.join(', '),
                 actionDate: actionDate ? new Date(actionDate).toISOString() : undefined,
                 callDate: new Date().toISOString(),
             });
@@ -95,7 +106,7 @@ export default function AddCallModal({ visible, onClose, onCallAdded }: Props) {
         setContactName('');
         setContactNumber('');
         setNotes('');
-        setActions('');
+        setActions([]);
         setActionDate('');
     };
 
@@ -205,14 +216,37 @@ export default function AddCallModal({ visible, onClose, onCallAdded }: Props) {
                                 multiline
                             />
 
+                           {/* Next Actions */}
                             <Text style={styles.label}>Next Actions</Text>
-                            <TextInput
-                                style={styles.input}
-                                value={actions}
-                                onChangeText={setActions}
-                                placeholderTextColor="#AAAAAA"
-                                placeholder="e.g. Send proposal, call back Thursday"
-                            />
+                            <View style={styles.chipRow}>
+                                {NEXT_ACTIONS.map(a => {
+                                    const isSelected = actions.includes(a);
+                                    return (
+                                        <TouchableOpacity
+                                            key={a}
+                                            style={[
+                                                styles.chip,
+                                                { borderColor: colors.teal },
+                                                isSelected && { backgroundColor: colors.teal },
+                                            ]}
+                                            onPress={() => {
+                                                setActions(prev =>
+                                                    prev.includes(a)
+                                                        ? prev.filter(x => x !== a)  // deselect
+                                                        : [...prev, a]                // select
+                                                );
+                                            }}
+                                        >
+                                            <Text style={[
+                                                styles.chipText,
+                                                { color: isSelected ? '#FFFFFF' : colors.teal },
+                                            ]}>
+                                                {a}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    );
+                                })}
+                            </View>
 
                             <Text style={styles.label}>Action Date</Text>
                             <TextInput
